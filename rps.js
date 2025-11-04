@@ -19,8 +19,48 @@ Compare choice from user vs. computer
     else
         return "You lose!"
 */
+//don't think I need select or addEventListener because I do not run the function
+// when the user chagnes the selection but rather when the user presses the button
+// MAYBE add an event listener for AFTER the user chooses initially that disables the ability 
+// to choose a new one until hitting the reset button??
+
+//const select = document.querySelector("select");
+const resultText = document.querySelector("#result_text");
+const startResetButton = document.querySelector("start_reset_button");
+const userChoice = document.querySelector("#user_choice");
+const ROCK = "R";
+const PAPER = "P";
+const SCISSORS = "S";
+let compChoice;
+
+startResetButton.addEventListener("click", () =>
+    const =
+)
+
 
 function getComputerChoice() {
-    
+    let randNumb = math.random();
+    if (randNumb <= 1/3) {
+        compChoice = ROCK;
+    } else if (randNumb <= 2/3) {
+        compChoice = PAPER;
+    } else {
+        compChoice = SCISSORS;
+    }
 }
+
+function playRound(userChoice, compChoice) {
+    if (userChoice === compChoice) {
+        resultText.value = "Tie!"
+    } else if (
+        (userChoice === ROCK && compChoice === SCISSORS) ||
+        (userChoice === PAPER && compChoice === ROCK) ||
+        (userChoice === SCISSORS && compChoice === PAPER)
+    )   { 
+        resultText.value ="You win!";
+    } else {
+        resultText.value = "You lose!";
+    }
+}
+
 
