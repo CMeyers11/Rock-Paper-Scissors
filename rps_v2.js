@@ -35,12 +35,15 @@ startResetButton.addEventListener("click", () => {
         const outcome = playRound(userChoice, compChoice);
 
         resultText.textContent =
-            `Computer chose ${expand(compChoice)}. ${outcome}`;
+            `You chose ${userChoice}. Computer chose ${compChoice}. ${outcome}`;
 
         gameActive = true;
         startResetButton.textContent = "Reset Game";
+            select.disabled = true;
     }  else {
         init();
+            select.disabled = false;
+            select.selectedIndex = 0;
     }
 });
 
@@ -53,24 +56,24 @@ function init() {
 function getComputerChoice() {
     let randNumb = Math.random();
     if (randNumb <= 1/3) {
-        return "R";
+        return "Rock";
     } else if (randNumb <= 2/3) {
-        return "P";
+        return "Paper";
     } else {
-        return "S";
+        return "Scissors";
     }
 }
 
 function playRound(user, comp) {
     if (user === comp) {
-        resultText.value = "Tie!"
+        return "Tie!";
     } else if (
-        (user === "R" && comp === "S") ||
-        (user === "P" && comp === "R") ||
-        (user === "S" && comp === "P")
+        (user === "Rock" && comp === "Scissors") ||
+        (user === "Paper" && comp === "Rock") ||
+        (user === "Scissors" && comp === "Paper")
     )   { 
-        resultText.value ="You win!";
+        return "You win!";
     } else {
-        resultText.value = "You lose!";
+        return "You lose!";
     }
 }
