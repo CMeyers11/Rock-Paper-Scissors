@@ -19,49 +19,58 @@ Compare choice from user vs. computer
     else
         return "You lose!"
 */
-//don't think I need select or addEventListener because I do not run the function
-// when the user chagnes the selection but rather when the user presses the button
-// MAYBE add an event listener for AFTER the user chooses initially that disables the ability 
-// to choose a new one until hitting the reset button??
 
-const select = document.querySelector("select");
+const select = document.querySelector("#user_choice");
+const startResetButton = document.querySelector("#start_reset_button");
 const resultText = document.querySelector("#result_text");
-const startResetButton = document.querySelector("start_reset_button");
-const userChoice = document.querySelector("#user_choice");
-const ROCK = "R";
-const PAPER = "P";
-const SCISSORS = "S";
-let compChoice;
 
-startResetButton.addEventListener("click", () =>
-    const
-)
+let gameActive = false;
 
+init();
+
+startResetButton.addEventListener("click", () => {
+    if (!gameActive) {
+        const userChoice = select.value;
+        const compChoice = getComputerChoice();
+        const outcome = playRound(userChoice, compChoice);
+
+        resultText.textContent =
+            `Computer chose ${expand(compChoice)}. ${outcome}`;
+
+        gameActive = true;
+        startResetButton.textContent = "Reset Game";
+    }  else {
+        init();
+    }
+});
+
+function init() {
+    gameActive = false;
+    resultText.textContent = "";
+    startResetButton.textContent = "Start Game";
+}
 
 function getComputerChoice() {
-    let randNumb = math.random();
+    let randNumb = Math.random();
     if (randNumb <= 1/3) {
-        compChoice = ROCK;
+        return "R";
     } else if (randNumb <= 2/3) {
-        compChoice = PAPER;
+        return "P";
     } else {
-        compChoice = SCISSORS;
+        return "S";
     }
 }
 
-function playRound(userChoice) {
-    getComputerChoice();
-    if (userChoice === compChoice) {
+function playRound(user, comp) {
+    if (user === comp) {
         resultText.value = "Tie!"
     } else if (
-        (userChoice === ROCK && compChoice === SCISSORS) ||
-        (userChoice === PAPER && compChoice === ROCK) ||
-        (userChoice === SCISSORS && compChoice === PAPER)
+        (user === "R" && comp === "S") ||
+        (user === "P" && comp === "R") ||
+        (user === "S" && comp === "P")
     )   { 
         resultText.value ="You win!";
     } else {
         resultText.value = "You lose!";
     }
 }
-
-
