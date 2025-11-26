@@ -9,6 +9,8 @@ let compScoreDiv = null;
 let userScoreDiv = null;
 let compScoreNumber = 0;
 let userScoreNumber = 0;
+const bestOf = 5;
+let seriesMessageDiv = null;
 
 choicesDiv.addEventListener('click', (event) => {
     if (event.target.matches("button.choice")) {
@@ -34,6 +36,9 @@ choicesDiv.addEventListener('click', (event) => {
             userScoreDiv = document.createElement('div');
             scoreCard.appendChild(compScoreDiv);
             scoreCard.appendChild(userScoreDiv);
+            resetButton = document.createElement('button');
+            resetButton.textContent = 'Reset Game'
+            outputBlock.appendChild(resetButton);
         }
 
         // Add one game entry
@@ -42,7 +47,7 @@ choicesDiv.addEventListener('click', (event) => {
         gameLog.appendChild(li);
 
         //increment score tally
-        if (result === "You win!") {
+        if (result === "You Win!") {
             userScoreNumber += 1;
         } else if (result === "You Lose!") {
             compScoreNumber += 1;
@@ -51,6 +56,32 @@ choicesDiv.addEventListener('click', (event) => {
         compScoreDiv.textContent = `Computer: ${compScoreNumber}`;
         userScoreDiv.textContent = `User: ${userScoreNumber}`;
         gameNumber++;
+
+        // Reset game option
+        resetButton.addEventListener('click',() => {
+            gameNumber = 0;
+            gameLog = null;
+            scoreCard = null;
+            compScoreDiv = null;
+            userScoreDiv = null;
+            compScoreNumber = 0;
+            userScoreNumber = 0;
+            seriesMessageDiv = null;
+            choicesDiv.button.disabled = false;
+            resetButton = null;
+        })
+
+        if (Math.max(userScoreNumber,compScoreNumber) === bestOf) {
+            seriesMessageDiv = document.createElement('div');
+            outputBlock.appendChild(seriesMessageDiv);
+            if (userScoreNumber > compScoreNumber) {
+                seriesMessageDiv = document.textContent(`You win series ${userScoreNumber}:${compScoreNumber}`);
+            } else {
+                seriesMessageDiv = document.textContent(`You lose series ${compScoreNumber}:${userScoreNumber}`);
+            }
+            choicesDiv.button.disabled = true;
+            resetButton.textContent = 'Play again';
+        }
     }
 });
 
